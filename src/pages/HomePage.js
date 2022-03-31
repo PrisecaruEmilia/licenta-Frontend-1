@@ -7,7 +7,7 @@ import HomeTop from '../components/home/HomeTop';
 import NewArrival from '../components/home/NewArrival';
 import NavMenuMobile from '../components/common/NavMenuMobile';
 import HomeTopMobile from '../components/home/HomeTopMobile';
-
+import Footer from '../components/common/Footer';
 export class HomePage extends Component {
   render() {
     return (
@@ -27,6 +27,7 @@ export class HomePage extends Component {
         <NewArrival />
         <Categories />
         <Collection />
+        <Footer />
       </Fragment>
     );
   }
