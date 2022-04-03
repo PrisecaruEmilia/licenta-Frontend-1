@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react';
+import Purchase from '../components/others/Purchase';
 import Footer from '../components/common/Footer';
 import FooterMobile from '../components/common/FooterMobile';
 import NavMenu from '../components/common/NavMenu';
 import NavMenuMobile from '../components/common/NavMenuMobile';
-import UserLogin from '../components/common/UserLogin';
 
 class UserLoginPage extends Component {
   componentDidMount() {
@@ -19,9 +19,7 @@ class UserLoginPage extends Component {
         <div className="Mobile">
           <NavMenuMobile />
         </div>
-
-        <UserLogin />
-
+        <Purchase />
         <div className="Desktop">
           <Footer />
         </div>
