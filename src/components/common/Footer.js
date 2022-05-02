@@ -71,6 +71,8 @@ export class Footer extends Component {
                   <img className="mt-2" src={Apple} />
                 </a>
                 <br></br>
+                Change Your Language <br></br>
+                <div id="google_translate_element"> </div>
               </Col>
             </Row>
           </Container>
