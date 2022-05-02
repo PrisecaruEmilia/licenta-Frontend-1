@@ -8,6 +8,7 @@ import PurchasePage from '../pages/PurchasePage';
 import RefundPage from '../pages/RefundPage';
 import ProductDetailsPage from '../pages/ProductDetailsPage';
 import NotificationPage from '../pages/NotificationPage';
+import FavoritePage from '../pages/FavoritePage';
 export class AppRoute extends Component {
   render() {
     return (
@@ -21,6 +22,7 @@ export class AppRoute extends Component {
           <Route exact path="/refund" component={RefundPage} />
           <Route exact path="/productdetails" component={ProductDetailsPage} />
           <Route exact path="/notification" component={NotificationPage} />
+          <Route exact path="/favorite" component={FavoritePage} />
         </Switch>
       </Fragment>
     );
