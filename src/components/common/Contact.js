@@ -3,6 +3,8 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import validation from '../../validation/validations';
 import axios from 'axios';
 import AppURL from '../../api/AppUrl';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export class Contact extends Component {
   constructor() {
     super();
@@ -39,13 +41,13 @@ export class Contact extends Component {
     let contactForm = document.getElementById('contactForm');
 
     if (message.length == 0) {
-      alert('Please write your message');
+      toast.error('Please write your message');
     } else if (name.length == 0) {
-      alert('Please write down our name');
+      toast.error('Please write down our name');
     } else if (email.length == 0) {
-      alert('Please write down our Email');
+      toast.error('Please write down our Email');
     } else if (!validation.NameRegx.test(name)) {
-      alert('Invaid Name');
+      toast.error('Invaid Name');
     } else {
       sendBtn.innerHTML = 'Sending...';
       let MyFormData = new FormData();
@@ -57,16 +59,16 @@ export class Contact extends Component {
         .post(AppURL.PostContact, MyFormData)
         .then(function (response) {
           if (response.status == 200 && response.data == 1) {
-            alert('Message Send Successfully');
+            toast.success('Message Send Successfully');
             sendBtn.innerHTML = 'Send';
             contactForm.reset();
           } else {
-            alert('error');
+            toast.error('error');
             sendBtn.innerHTML = 'Send';
           }
         })
         .catch(function (error) {
-          alert(error);
+          toast.error(error);
           sendBtn.innerHTML = 'Send';
         });
     }
@@ -155,6 +157,7 @@ export class Contact extends Component {
             </Col>
           </Row>
         </Container>
+        <ToastContainer />
       </Fragment>
     );
   }
