@@ -3,6 +3,8 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import AppURL from '../../api/AppUrl';
 import axios from 'axios';
 import ReactHtmlParser from 'react-html-parser';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export class Purchase extends Component {
   constructor() {
     super();
@@ -12,17 +14,35 @@ export class Purchase extends Component {
   }
 
   componentDidMount() {
-    axios
-      .get(AppURL.AllSiteInfo)
-      .then((response) => {
-        let StatusCode = response.status;
-        if (StatusCode == 200) {
-          let JsonData = response.data[0]['purchase_guide'];
-          this.setState({ purchase: JsonData });
-        }
-      })
-      .catch((error) => {});
+    let SiteInfoPurchase = sessionStorage.getItem('AllSiteInfo');
+
+    if (SiteInfoPurchase == null) {
+      axios
+        .get(AppURL.AllSiteInfo)
+        .then((response) => {
+          let StatusCode = response.status;
+          if (StatusCode == 200) {
+            let JsonData = response.data[0]['purchase_guide'];
+            this.setState({ purchase: JsonData });
+
+            sessionStorage.setItem('SiteInfoPurchase', JsonData);
+          } else {
+            toast.error('Something Went Wrong', {
+              position: 'bottom-center',
+            });
+          }
+        })
+        .catch((error) => {
+          toast.error('Something Went Wrong', {
+            position: 'bottom-center',
+          });
+        });
+    } // end If Conditon
+    else {
+      this.setState({ purchase: SiteInfoPurchase });
+    }
   }
+
   render() {
     return (
       <Fragment>
@@ -36,13 +56,14 @@ export class Purchase extends Component {
               xs={12}
             >
               <h4 className="section-title-login">Purchase Page </h4>
-              <p className="section-title-contact">
+              <div className="section-title-contact">
                 {' '}
                 {ReactHtmlParser(this.state.purchase)}
-              </p>
+              </div>
             </Col>
           </Row>
         </Container>
+        <ToastContainer />
       </Fragment>
     );
   }

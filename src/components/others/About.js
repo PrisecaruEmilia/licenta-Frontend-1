@@ -37,9 +37,9 @@ class About extends Component {
               xs={12}
             >
               <h4 className="section-title-login">About Us Page </h4>
-              <p className="section-title-contact">
+              <div className="section-title-contact">
                 {ReactHtmlParser(this.state.about)}
-              </p>
+              </div>
             </Col>
           </Row>
         </Container>
