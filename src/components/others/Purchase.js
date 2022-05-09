@@ -10,6 +10,8 @@ export class Purchase extends Component {
     super();
     this.state = {
       purchase: '',
+      loaderDiv: '',
+      mainDiv: 'd-none',
     };
   }
 
@@ -23,7 +25,11 @@ export class Purchase extends Component {
           let StatusCode = response.status;
           if (StatusCode == 200) {
             let JsonData = response.data[0]['purchase_guide'];
-            this.setState({ purchase: JsonData });
+            this.setState({
+              purchase: JsonData,
+              loaderDiv: 'd-none',
+              mainDiv: '',
+            });
 
             sessionStorage.setItem('SiteInfoPurchase', JsonData);
           } else {
@@ -39,7 +45,11 @@ export class Purchase extends Component {
         });
     } // end If Conditon
     else {
-      this.setState({ purchase: SiteInfoPurchase });
+      this.setState({
+        purchase: SiteInfoPurchase,
+        loaderDiv: 'd-none',
+        mainDiv: '',
+      });
     }
   }
 
@@ -55,10 +65,44 @@ export class Purchase extends Component {
               sm={12}
               xs={12}
             >
-              <h4 className="section-title-login">Purchase Page </h4>
-              <div className="section-title-contact">
-                {' '}
-                {ReactHtmlParser(this.state.purchase)}
+              <div className={this.state.loaderDiv}>
+                <div class="ph-item">
+                  <div class="ph-col-12">
+                    <div class="ph-row">
+                      <div class="ph-col-4"></div>
+                      <div class="ph-col-8 empty"></div>
+                      <div class="ph-col-6"></div>
+                      <div class="ph-col-6 empty"></div>
+                      <div class="ph-col-12"></div>
+                      <div class="ph-col-12"></div>
+                      <div class="ph-col-12"></div>
+                      <div class="ph-col-12"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ph-item">
+                  <div class="ph-col-12">
+                    <div class="ph-row">
+                      <div class="ph-col-4"></div>
+                      <div class="ph-col-8 empty"></div>
+                      <div class="ph-col-6"></div>
+                      <div class="ph-col-6 empty"></div>
+                      <div class="ph-col-12"></div>
+                      <div class="ph-col-12"></div>
+                      <div class="ph-col-12"></div>
+                      <div class="ph-col-12"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className={this.state.mainDiv}>
+                <h4 className="section-title-login">Purchase Page </h4>
+                <div className="section-title-contact">
+                  {' '}
+                  {ReactHtmlParser(this.state.purchase)}
+                </div>
               </div>
             </Col>
           </Row>
