@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 
 export class MegaMenu extends Component {
-  constructor() {
+  constructor(props) {
     super();
-    this.MegaMenu = this.MegaMenu.bind(this);
-  }
-
-  componentDidMount() {
-    this.MegaMenu();
   }
 
   MegaMenu() {
@@ -27,185 +22,38 @@ export class MegaMenu extends Component {
     }
   }
   render() {
-    return (
-      <div className="accordionMenuDiv">
-        <div className="accordionMenuDivInside">
-          <button className="accordion">
-            <img
-              className="accordionMenuIcon"
-              src="https://rukminim1.flixcart.com/flap/128/128/image/f15c02bfeb02d15d.png?q=100"
-            />
-            &nbsp; Men's Shoes
-          </button>
-          <div className="panel">
-            <ul>
-              <li>
-                <a href="#" className="accordionItem">
-                  Mans Shoes 1
-                </a>
-              </li>
-              <li>
-                <a href="#" className="accordionItem">
-                  Mans Shoes 2
-                </a>
-              </li>
-            </ul>
-          </div>
+    const CatList = this.props.data;
 
+    const MyView = CatList.map((CatList, i) => {
+      return (
+        <div key={i.toString()}>
           <button className="accordion">
-            <img
-              className="accordionMenuIcon"
-              src="https://rukminim1.flixcart.com/flap/128/128/image/f15c02bfeb02d15d.png?q=100"
-            />
-            &nbsp; Men's Shoes
+            <img className="accordionMenuIcon" src={CatList.category_image} />
+            &nbsp; {CatList.category_name}
           </button>
           <div className="panel">
             <ul>
               <li>
                 <a href="#" className="accordionItem">
-                  Mans Shoes 1
+                  {' '}
+                  Mans Tshirt 1
                 </a>
               </li>
               <li>
                 <a href="#" className="accordionItem">
-                  Mans Shoes 2
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <button className="accordion">
-            <img
-              className="accordionMenuIcon"
-              src="https://rukminim1.flixcart.com/flap/128/128/image/f15c02bfeb02d15d.png?q=100"
-            />
-            &nbsp; Men's Shoes
-          </button>
-          <div className="panel">
-            <ul>
-              <li>
-                <a href="#" className="accordionItem">
-                  Mans Shoes 1
-                </a>
-              </li>
-              <li>
-                <a href="#" className="accordionItem">
-                  Mans Shoes 2
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <button className="accordion">
-            <img
-              className="accordionMenuIcon"
-              src="https://rukminim1.flixcart.com/flap/128/128/image/f15c02bfeb02d15d.png?q=100"
-            />
-            &nbsp; Men's Shoes
-          </button>
-          <div className="panel">
-            <ul>
-              <li>
-                <a href="#" className="accordionItem">
-                  Mans Shoes 1
-                </a>
-              </li>
-              <li>
-                <a href="#" className="accordionItem">
-                  Mans Shoes 2
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <button className="accordion">
-            <img
-              className="accordionMenuIcon"
-              src="https://rukminim1.flixcart.com/flap/128/128/image/f15c02bfeb02d15d.png?q=100"
-            />
-            &nbsp; Men's Shoes
-          </button>
-          <div className="panel">
-            <ul>
-              <li>
-                <a href="#" className="accordionItem">
-                  Mans Shoes 1
-                </a>
-              </li>
-              <li>
-                <a href="#" className="accordionItem">
-                  Mans Shoes 2
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <button className="accordion">
-            <img
-              className="accordionMenuIcon"
-              src="https://rukminim1.flixcart.com/flap/128/128/image/f15c02bfeb02d15d.png?q=100"
-            />
-            &nbsp; Men's Shoes
-          </button>
-          <div className="panel">
-            <ul>
-              <li>
-                <a href="#" className="accordionItem">
-                  Mans Shoes 1
-                </a>
-              </li>
-              <li>
-                <a href="#" className="accordionItem">
-                  Mans Shoes 2
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <button className="accordion">
-            <img
-              className="accordionMenuIcon"
-              src="https://rukminim1.flixcart.com/flap/128/128/image/f15c02bfeb02d15d.png?q=100"
-            />
-            &nbsp; Men's Shoes
-          </button>
-          <div className="panel">
-            <ul>
-              <li>
-                <a href="#" className="accordionItem">
-                  Mans Shoes 1
-                </a>
-              </li>
-              <li>
-                <a href="#" className="accordionItem">
-                  Mans Shoes 2
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <button className="accordion">
-            <img
-              className="accordionMenuIcon"
-              src="https://rukminim1.flixcart.com/flap/128/128/image/f15c02bfeb02d15d.png?q=100"
-            />
-            &nbsp; Men's Shoes
-          </button>
-          <div className="panel">
-            <ul>
-              <li>
-                <a href="#" className="accordionItem">
-                  Mans Shoes 1
-                </a>
-              </li>
-              <li>
-                <a href="#" className="accordionItem">
-                  Mans Shoes 2
+                  {' '}
+                  Mans Tshirt 2
                 </a>
               </li>
             </ul>
           </div>
         </div>
+      );
+    });
+
+    return (
+      <div className="accordionMenuDiv">
+        <div className="accordionMenuDivInside">{MyView}</div>
       </div>
     );
   }
