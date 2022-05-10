@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { Link } from 'react-router-dom';
 export class MegaMenu extends Component {
   constructor(props) {
     super();
@@ -29,9 +29,17 @@ export class MegaMenu extends Component {
               {CatList.subcategory_name.map((SubList, i) => {
                 return (
                   <li>
-                    <a href="#" className="accordionItem">
+                    <Link
+                      to={
+                        'productsubcategory/' +
+                        CatList.category_name +
+                        '/' +
+                        SubList.subcategory_name
+                      }
+                      className="accordionItem"
+                    >
                       {SubList.subcategory_name}{' '}
-                    </a>
+                    </Link>
                   </li>
                 );
               })}
