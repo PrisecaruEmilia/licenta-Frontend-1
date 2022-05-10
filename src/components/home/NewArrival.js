@@ -3,10 +3,14 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-
+import AppURL from '../../api/AppUrl';
+import axios from 'axios';
 export class NewArrival extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      ProductData: [],
+    };
     this.next = this.next.bind(this);
     this.previous = this.previous.bind(this);
   }
@@ -16,7 +20,51 @@ export class NewArrival extends Component {
   previous() {
     this.slider.slickPrev();
   }
+
+  componentDidMount() {
+    axios
+      .get(AppURL.ProductListByRemark('NEW'))
+      .then((response) => {
+        this.setState({ ProductData: response.data });
+      })
+      .catch((error) => {});
+  }
   render() {
+    const NewList = this.state.ProductData;
+    const MyView = NewList.map((NewList, i) => {
+      if (NewList.special_price == 'na') {
+        return (
+          <div>
+            <Card className="image-box card">
+              <img className="center" src={NewList.image} />
+              <Card.Body>
+                <p className="product-name-on-card">{NewList.title}</p>
+                <p className="product-price-on-card">
+                  Price : ${NewList.price}
+                </p>
+              </Card.Body>
+            </Card>
+          </div>
+        );
+      } else {
+        return (
+          <div>
+            <Card className="image-box card">
+              <img className="center" src={NewList.image} />
+              <Card.Body>
+                <p className="product-name-on-card">{NewList.title}</p>
+                <p className="product-price-on-card">
+                  Price :{' '}
+                  <strike className="text-secondary">${NewList.price}</strike> $
+                  {NewList.special_price}
+                </p>
+              </Card.Body>
+            </Card>
+          </div>
+        );
+      }
+    });
+
     var settings = {
       dots: false,
       infinite: true,
@@ -71,102 +119,7 @@ export class NewArrival extends Component {
           </div>
           <Row>
             <Slider ref={(c) => (this.slider = c)} {...settings}>
-              <div>
-                <Card className="image-box card">
-                  <img
-                    className="center"
-                    src="https://deichmann.scene7.com/asset/deichmann/p_pd_gradiant/--18206181_P_DRO.jpg?defaultImage=default"
-                    alt="SNEAKERSI"
-                  ></img>
-                  <Card.Body>
-                    <p className="product-name-on-card">
-                      SNEAKERSI CASUAL NIKE COURT VISION LOW
-                    </p>
-                    <p className="product-price-on-card">Price : 320,00 lei</p>
-                  </Card.Body>
-                </Card>
-              </div>
-              <div>
-                <Card className="image-box card">
-                  <img
-                    className="center"
-                    src="https://www.epantofi.ro/media/catalog/product/cache/image/650x650/0/0/0000206983022_1__1.jpg"
-                    alt="SNEAKERSI"
-                  ></img>
-                  <Card.Body>
-                    <p className="product-name-on-card">
-                      Teniși LEVI'S - 225849-1733-50 Brilliant White
-                    </p>
-                    <p className="product-price-on-card">Price : 179,00 lei</p>
-                  </Card.Body>
-                </Card>
-              </div>
-              <div>
-                <Card className="image-box card">
-                  <img
-                    className="center"
-                    src="https://www.epantofi.ro/media/catalog/product/cache/image/650x650/0/0/0000209263176_01_rz.jpg"
-                    alt="SNEAKERSI"
-                  ></img>
-                  <Card.Body>
-                    <p className="product-name-on-card">
-                      Sneakers NEW BALANCE - ML515HL3 Negru
-                    </p>
-                    <p className="product-price-on-card">Price : 898,00 lei</p>
-                  </Card.Body>
-                </Card>
-              </div>
-              <div>
-                <Card className="image-box card">
-                  <img
-                    className="center"
-                    src="https://www.epantofi.ro/media/catalog/product/cache/image/650x650/0/0/0000208668965_01_pa.jpg"
-                    alt="SNEAKERSI"
-                  ></img>
-                  <Card.Body>
-                    <p className="product-name-on-card">
-                      Pantofi închiși HUGO - Ruston 50459079
-                    </p>
-                    <p className="product-price-on-card">Price : 898,00 lei</p>
-                  </Card.Body>
-                </Card>
-              </div>
-              <div>
-                <Card className="image-box card">
-                  <img
-                    className="center"
-                    src="https://www.epantofi.ro/media/catalog/product/cache/image/650x650/0/0/0000208613873_01_rz.jpg"
-                    alt="SNEAKERSI"
-                  ></img>
-                  <Card.Body>
-                    <p className="product-name-on-card">
-                      Pantofi NIKE - Air Jordan XXXV CQ4227 004
-                    </p>
-                    <p className="product-price-on-card">Price : 898,00 lei</p>
-                  </Card.Body>
-                </Card>
-              </div>
-              <div>
-                <Card className="image-box card">
-                  <img
-                    className="center"
-                    src="https://www.epantofi.ro/media/catalog/product/cache/image/650x650/0/0/0000208918152_01_rz_1.jpg"
-                    alt="SNEAKERSI"
-                  ></img>
-                  <Card.Body>
-                    <p className="product-name-on-card">
-                      Sneakers PUMA - Rs-X³ 374758 02 Puma
-                    </p>
-                    <p className="product-price-on-card">Price : 348,00 lei</p>
-                  </Card.Body>
-                </Card>
-              </div>
-              <div>
-                <h3>7</h3>
-              </div>
-              <div>
-                <h3>8</h3>
-              </div>
+              {MyView}
             </Slider>
           </Row>
         </Container>
