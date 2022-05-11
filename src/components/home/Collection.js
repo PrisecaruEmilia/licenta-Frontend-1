@@ -2,11 +2,14 @@ import React, { Component, Fragment } from 'react';
 import { Col, Container, Row, Card } from 'react-bootstrap';
 import AppURL from '../../api/AppUrl';
 import axios from 'axios';
+import CollectionLoading from '../PlaceHolder/CollectionLoading';
 export class Collection extends Component {
   constructor() {
     super();
     this.state = {
       ProductData: [],
+      isLoading: '',
+      mainDiv: 'd-none',
     };
   }
 
@@ -14,7 +17,11 @@ export class Collection extends Component {
     axios
       .get(AppURL.ProductListByRemark('COLLECTION'))
       .then((response) => {
-        this.setState({ ProductData: response.data });
+        this.setState({
+          ProductData: response.data,
+          isLoading: 'd-none',
+          mainDiv: ' ',
+        });
       })
       .catch((error) => {});
   }
@@ -58,14 +65,18 @@ export class Collection extends Component {
 
     return (
       <Fragment>
-        <Container className="text-center" fluid={true}>
-          <div className="section-title text-center mb-55">
-            <h2> PRODUCT COLLECTION</h2>
-            <p>Some Of Our Exclusive Collection, You May Like</p>
-          </div>
+        <CollectionLoading isLoading={this.state.isLoading} />
 
-          <Row>{MyView}</Row>
-        </Container>
+        <div className={this.state.mainDiv}>
+          <Container className="text-center" fluid={true}>
+            <div className="section-title text-center mb-55">
+              <h2> PRODUCT COLLECTION</h2>
+              <p>Some Of Our Exclusive Collection, You May Like</p>
+            </div>
+
+            <Row>{MyView}</Row>
+          </Container>
+        </div>
       </Fragment>
     );
   }
