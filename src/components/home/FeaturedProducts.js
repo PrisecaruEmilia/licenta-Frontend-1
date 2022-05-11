@@ -3,11 +3,14 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import AppURL from '../../api/AppUrl';
 import axios from 'axios';
+import FeaturedLoading from '../PlaceHolder/FeaturedLoading';
 export class FeaturedProducts extends Component {
   constructor() {
     super();
     this.state = {
       ProductData: [],
+      isLoading: '',
+      mainDiv: 'd-none',
     };
   }
 
@@ -15,7 +18,11 @@ export class FeaturedProducts extends Component {
     axios
       .get(AppURL.ProductListByRemark('FEATURED'))
       .then((response) => {
-        this.setState({ ProductData: response.data });
+        this.setState({
+          ProductData: response.data,
+          isLoading: 'd-none',
+          mainDiv: ' ',
+        });
       })
       .catch((error) => {});
   }
@@ -64,14 +71,18 @@ export class FeaturedProducts extends Component {
 
     return (
       <Fragment>
-        <Container className="text-center" fluid={true}>
-          <div className="section-title text-center mb-55">
-            <h2>FEATURED PRODUCT</h2>
-            <p>Some Of Our Exclusive Collection, You May Like</p>
-          </div>
+        <FeaturedLoading isLoading={this.state.isLoading} />
 
-          <Row>{MyView}</Row>
-        </Container>
+        <div className={this.state.mainDiv}>
+          <Container className="text-center" fluid={true}>
+            <div className="section-title text-center mb-55">
+              <h2>FEATURED PRODUCT</h2>
+              <p>Some Of Our Exclusive Collection, You May Like</p>
+            </div>
+
+            <Row>{MyView}</Row>
+          </Container>
+        </div>
       </Fragment>
     );
   }
