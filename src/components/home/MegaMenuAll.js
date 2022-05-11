@@ -19,6 +19,10 @@ class MegaMenuAll extends Component {
       .catch((error) => {});
   }
 
+  refreshPage = () => {
+    window.location.reload();
+  };
+
   MenuItemClick = (event) => {
     event.target.classList.toggle('active');
     var panel = event.target.nextElementSibling;
@@ -46,10 +50,10 @@ class MegaMenuAll extends Component {
             <ul>
               {CatList.subcategory_name.map((SubList, i) => {
                 return (
-                  <li>
+                  <li onClick={this.refreshPage}>
                     <Link
                       to={
-                        'productsubcategory/' +
+                        '/productsubcategory/' +
                         CatList.category_name +
                         '/' +
                         SubList.subcategory_name
@@ -58,6 +62,17 @@ class MegaMenuAll extends Component {
                     >
                       {SubList.subcategory_name}{' '}
                     </Link>
+                    {/* <Link
+                      onClick={() => {
+                        window.location.href =
+                          '/productsubcategory/' +
+                          CatList.category_name +
+                          '/' +
+                          SubList.subcategory_name;
+                      }}
+                    >
+                      {SubList.subcategory_name}
+                    </Link> */}
                   </li>
                 );
               })}
