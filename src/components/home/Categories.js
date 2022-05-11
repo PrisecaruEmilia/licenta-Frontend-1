@@ -3,11 +3,14 @@ import { Col, Container, Row, Card } from 'react-bootstrap';
 import AppURL from '../../api/AppUrl';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import CategoryLoading from '../PlaceHolder/CategoryLoading';
 export class Categories extends Component {
   constructor() {
     super();
     this.state = {
       MenuData: [],
+      isLoading: '',
+      mainDiv: 'd-none',
     };
   }
 
@@ -15,7 +18,11 @@ export class Categories extends Component {
     axios
       .get(AppURL.AllCategoryDetails)
       .then((response) => {
-        this.setState({ MenuData: response.data });
+        this.setState({
+          MenuData: response.data,
+          isLoading: 'd-none',
+          mainDiv: ' ',
+        });
       })
       .catch((error) => {});
   }
@@ -46,14 +53,18 @@ export class Categories extends Component {
 
     return (
       <Fragment>
-        <Container className="text-center" fluid={true}>
-          <div className="section-title text-center mb-55">
-            <h2> CATEGORIES</h2>
-            <p>Some Of Our Exclusive Collection, You May Like</p>
-          </div>
+        <CategoryLoading isLoading={this.state.isLoading} />
 
-          <Row>{MyView}</Row>
-        </Container>
+        <div className={this.state.mainDiv}>
+          <Container className="text-center" fluid={true}>
+            <div className="section-title text-center mb-55">
+              <h2> CATEGORIES</h2>
+              <p>Some Of Our Exclusive Collection, You May Like</p>
+            </div>
+
+            <Row>{MyView}</Row>
+          </Container>
+        </div>
       </Fragment>
     );
   }
