@@ -17,6 +17,10 @@ export class NavMenu extends Component {
     this.searchRedirect = this.searchRedirect.bind(this);
   }
 
+  logout = () => {
+    localStorage.clear();
+  };
+
   SearchOnChange(event) {
     let Searchkey = event.target.value;
     // alert(Searchkey);
@@ -80,7 +84,7 @@ export class NavMenu extends Component {
           <Link to="/profile" className="h4 btn">
             PROFILE
           </Link>
-          <Link to="/register" className="h4 btn">
+          <Link to="/" onClick={this.logout} className="h4 btn">
             LOGOUT
           </Link>
 
