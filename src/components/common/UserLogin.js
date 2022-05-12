@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import Login from '../../assets/images/login.png';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import AppURL from '../../api/AppUrl';
 import axios from 'axios';
 class UserLogin extends Component {
@@ -11,6 +11,7 @@ class UserLogin extends Component {
       email: '',
       password: '',
       message: '',
+      loggedIn: false,
     };
   }
 
@@ -24,10 +25,17 @@ class UserLogin extends Component {
 
     axios
       .post(AppURL.UserLogin, data)
-      .then((response) => {})
+      .then((response) => {
+        localStorage.setItem('token', response.data.token);
+        this.setState({ loggedIn: true });
+      })
       .catch((error) => {});
   };
   render() {
+    /// After Login Redirect to Profile Page
+    if (this.state.loggedIn) {
+      return <Redirect to={'/profile'} />;
+    }
     return (
       <Fragment>
         <Container>
