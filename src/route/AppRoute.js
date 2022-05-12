@@ -14,6 +14,7 @@ import AboutPage from '../pages/AboutPage';
 import ProductCategoryPage from '../pages/ProductCategoryPage';
 import ProductSubCategoryPage from '../pages/ProductSubCategoryPage';
 import SearchPage from '../pages/SearchPage';
+import RegisterPage from '../pages/RegisterPage';
 export class AppRoute extends Component {
   render() {
     return (
@@ -29,7 +30,11 @@ export class AppRoute extends Component {
             path="/login"
             render={(props) => <UserLoginPage {...props} key={Date.now()} />}
           />
-
+          <Route
+            exact
+            path="/register"
+            render={(props) => <RegisterPage {...props} key={Date.now()} />}
+          />
           <Route
             exact
             path="/contact"

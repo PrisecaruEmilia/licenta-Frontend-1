@@ -1,8 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import Login from '../../assets/images/login.png';
 import { Link } from 'react-router-dom';
-class UserLogin extends Component {
+import Login from '../../assets/images/login.png';
+
+class Register extends Component {
   render() {
     return (
       <Fragment>
@@ -24,7 +25,12 @@ class UserLogin extends Component {
                   xs={12}
                 >
                   <Form className="onboardForm">
-                    <h4 className="section-title-login"> USER SING IN </h4>
+                    <h4 className="section-title-login"> USER REGISTER </h4>
+                    <input
+                      className="form-control m-2"
+                      type="text"
+                      placeholder="Enter Your Name"
+                    />
                     <input
                       className="form-control m-2"
                       type="email"
@@ -35,9 +41,14 @@ class UserLogin extends Component {
                       type="password"
                       placeholder="Enter Your Password"
                     />
+                    <input
+                      className="form-control m-2"
+                      type="password"
+                      placeholder="Confirm Your Password"
+                    />
                     <Button className="btn btn-block m-2 site-btn-login">
                       {' '}
-                      Login{' '}
+                      Sing Up{' '}
                     </Button>
                     <br></br> <br></br>
                     <hr />
@@ -50,9 +61,9 @@ class UserLogin extends Component {
                     </p>
                     <p>
                       {' '}
-                      <b> Don't Have An Account ? </b>
-                      <Link to="/register">
-                        <b> Register </b>{' '}
+                      <b> Already Have An Account ? </b>
+                      <Link to="/login">
+                        <b> Login </b>{' '}
                       </Link>{' '}
                     </p>
                   </Form>
@@ -70,4 +81,4 @@ class UserLogin extends Component {
   }
 }
 
-export default UserLogin;
+export default Register;
