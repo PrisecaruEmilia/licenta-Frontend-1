@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Navbar, Container, Row, Col, Button } from 'react-bootstrap';
 import Logo from '../../assets/images/easyshop.png';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import MegaMenuAll from '../home/MegaMenuAll';
 export class NavMenu extends Component {
   constructor() {
@@ -12,12 +12,20 @@ export class NavMenu extends Component {
       Searchkey: '',
       SearchRedirectStauts: false,
     };
+    this.SearchOnChange = this.SearchOnChange.bind(this);
+    this.SeachOnClick = this.SeachOnClick.bind(this);
+    this.searchRedirect = this.searchRedirect.bind(this);
   }
 
   SearchOnChange(event) {
     let Searchkey = event.target.value;
     // alert(Searchkey);
     this.setState({ Searchkey: Searchkey });
+  }
+  searchRedirect() {
+    if (this.state.SearchRedirectStauts === true) {
+      return <Redirect to={'/productbysearch/' + this.state.Searchkey} />;
+    }
   }
 
   SeachOnClick() {
@@ -112,6 +120,7 @@ export class NavMenu extends Component {
                   </Link>
                 </Col>
               </Row>
+              {this.searchRedirect()}
             </Container>
           </Navbar>
         </div>
