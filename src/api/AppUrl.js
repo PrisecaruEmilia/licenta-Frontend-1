@@ -34,6 +34,8 @@ class AppUrl {
   static UserData = this.BaseURL + '/user';
 
   static UserRegister = this.BaseURL + '/register';
+
+  static UserForgetPassword = this.BaseURL + '/forgetpassword';
 }
 
 export default AppUrl;
