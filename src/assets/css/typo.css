@@ -48,3 +48,8 @@
 a {
   text-decoration: none !important;
 }
+
+.text-link {
+  color: inherit;
+  text-decoration: inherit;
+}
