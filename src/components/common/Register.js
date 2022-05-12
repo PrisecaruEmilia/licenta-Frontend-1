@@ -55,7 +55,7 @@ class Register extends Component {
                     <p>
                       {' '}
                       <b> Forget My Password? </b>
-                      <Link>
+                      <Link to="/forget">
                         <b> Froget Password </b>{' '}
                       </Link>{' '}
                     </p>
