@@ -4,7 +4,18 @@ import Product1 from '../../assets/images/product/product1.png';
 import Product2 from '../../assets/images/product/product2.png';
 import Product3 from '../../assets/images/product/product3.png';
 import Product4 from '../../assets/images/product/product4.png';
+import ReactDOM from 'react-dom';
 class ProductDetails extends Component {
+  constructor() {
+    super();
+  }
+
+  imgOnClick(event) {
+    let imgSrc = event.target.getAttribute('src');
+    let previewImg = document.getElementById('previewImg');
+    ReactDOM.findDOMNode(previewImg).setAttribute('src', imgSrc);
+  }
+
   render() {
     let ProductAllData = this.props.data;
     let title = ProductAllData['productList'][0]['title'];
@@ -44,20 +55,36 @@ class ProductDetails extends Component {
             >
               <Row>
                 <Col className="p-3" md={6} lg={6} sm={12} xs={12}>
-                  <img className="w-100" src={image_one} />
+                  <img id="previewImg" className="bigimage" src={image_one} />
                   <Container className="my-3">
                     <Row>
                       <Col className="p-0 m-0" md={3} lg={3} sm={3} xs={3}>
-                        <img className="w-100" src={image_one} />
+                        <img
+                          onClick={this.imgOnClick}
+                          className="w-100 smallimage product-sm-img"
+                          src={image_one}
+                        />
                       </Col>
                       <Col className="p-0 m-0" md={3} lg={3} sm={3} xs={3}>
-                        <img className="w-100" src={image_two} />
+                        <img
+                          onClick={this.imgOnClick}
+                          className="w-100 smallimage product-sm-img"
+                          src={image_two}
+                        />
                       </Col>
                       <Col className="p-0 m-0" md={3} lg={3} sm={3} xs={3}>
-                        <img className="w-100" src={image_three} />
+                        <img
+                          onClick={this.imgOnClick}
+                          className="w-100 smallimage product-sm-img"
+                          src={image_three}
+                        />
                       </Col>
                       <Col className="p-0 m-0" md={3} lg={3} sm={3} xs={3}>
-                        <img className="w-100" src={image_four} />
+                        <img
+                          onClick={this.imgOnClick}
+                          className="w-100 smallimage product-sm-img"
+                          src={image_four}
+                        />
                       </Col>
                     </Row>
                   </Container>
