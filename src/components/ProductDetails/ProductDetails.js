@@ -42,6 +42,27 @@ class ProductDetails extends Component {
       ProductAllData['productDetails'][0]['short_description'];
     let long_description =
       ProductAllData['productDetails'][0]['long_description'];
+    var ColorDiv = 'd-none';
+    if (color != 'na') {
+      let ColorArray = color.split(',');
+      var ColorOption = ColorArray.map((ColorList, i) => {
+        return <option value={ColorList}> {ColorList} </option>;
+      });
+      ColorDiv = '';
+    } else {
+      ColorDiv = 'd-none';
+    }
+
+    var SizeDiv = 'd-none';
+    if (size != 'na') {
+      let SizeArray = size.split(',');
+      var SizeOption = SizeArray.map((SizeList, i) => {
+        return <option value={SizeList}> {SizeList} </option>;
+      });
+      SizeDiv = '';
+    } else {
+      SizeDiv = 'd-none';
+    }
     return (
       <Fragment>
         <Container fluid={true} className="BetweenTwoSection">
@@ -106,54 +127,6 @@ class ProductDetails extends Component {
                   <h6 className="mt-2">
                     Category : <b>{category}</b>{' '}
                   </h6>
-                  {/* <h6 className="mt-2">Choose Color</h6>
-                  <div className="input-group">
-                    <div className="form-check mx-1">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="exampleRadios"
-                        id="exampleRadios1"
-                        value="option1"
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="exampleRadios1"
-                      >
-                        Black
-                      </label>
-                    </div>
-                    <div className="form-check mx-1">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="exampleRadios"
-                        id="exampleRadios1"
-                        value="option1"
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="exampleRadios1"
-                      >
-                        Green
-                      </label>
-                    </div>
-                    <div className="form-check mx-1">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="exampleRadios"
-                        id="exampleRadios1"
-                        value="option1"
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="exampleRadios1"
-                      >
-                        Red
-                      </label>
-                    </div>
-                  </div> */}
                   <h6 className="mt-2">
                     SubCategory : <b>{subcategory}</b>
                   </h6>
@@ -165,61 +138,38 @@ class ProductDetails extends Component {
                   <h6 className="mt-2">
                     Product Code : <b>{product_code}</b>
                   </h6>
-                  {/* <h6 className="mt-2">Choose Size</h6>
-                  <div className="input-group">
-                    <div className="form-check mx-1">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="exampleRadios"
-                        id="exampleRadios1"
-                        value="option1"
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="exampleRadios1"
-                      >
-                        X
-                      </label>
-                    </div>
-                    <div className="form-check mx-1">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="exampleRadios"
-                        id="exampleRadios1"
-                        value="option1"
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="exampleRadios1"
-                      >
-                        XX
-                      </label>
-                    </div>
-                    <div className="form-check mx-1">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="exampleRadios"
-                        id="exampleRadios1"
-                        value="option1"
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="exampleRadios1"
-                      >
-                        XXXX
-                      </label>
-                    </div>
-                  </div> */}
+                  <div className={ColorDiv}>
+                    <h6 className="mt-2"> Choose Color </h6>
+                    <select className="form-control form-select">
+                      <option>Choose Color</option>
+                      {ColorOption}
+                    </select>
+                  </div>
 
-                  {/* <h6 className="mt-2">Quantity</h6>
-                  <input
-                    className="form-control text-center w-50"
-                    type="number"
-                  /> */}
+                  <div className={SizeDiv}>
+                    <h6 className="mt-2"> Choose Size </h6>
+                    <select className="form-control form-select">
+                      <option>Choose Size</option>
+                      {SizeOption}
+                    </select>
+                  </div>
 
+                  <div className="">
+                    <h6 className="mt-2"> Choose Quantity </h6>
+                    <select className="form-control form-select">
+                      <option>Choose Quantity</option>
+                      <option value="01">01</option>
+                      <option value="02">02</option>
+                      <option value="03">03</option>
+                      <option value="04">04</option>
+                      <option value="05">05</option>
+                      <option value="06">06</option>
+                      <option value="07">07</option>
+                      <option value="08">08</option>
+                      <option value="09">09</option>
+                      <option value="10">10</option>
+                    </select>
+                  </div>
                   <div className="input-group mt-3">
                     <button className="btn site-btn m-1 ">
                       {' '}
