@@ -50,7 +50,31 @@ class MegaMenuAll extends Component {
             <ul>
               {CatList.subcategory_name.map((SubList, i) => {
                 return (
-                  <li onClick={this.refreshPage}>
+                  // <li onClick={this.refreshPage}>
+                  //   <Link
+                  //     to={
+                  //       '/productsubcategory/' +
+                  //       CatList.category_name +
+                  //       '/' +
+                  //       SubList.subcategory_name
+                  //     }
+                  //     className="accordionItem"
+                  //   >
+                  //     {SubList.subcategory_name}{' '}
+                  //   </Link>
+                  //   {/* <Link
+                  //     onClick={() => {
+                  //       window.location.href =
+                  //         '/productsubcategory/' +
+                  //         CatList.category_name +
+                  //         '/' +
+                  //         SubList.subcategory_name;
+                  //     }}
+                  //   >
+                  //     {SubList.subcategory_name}
+                  //   </Link> */}
+                  // </li>
+                  <li>
                     <Link
                       to={
                         '/productsubcategory/' +
@@ -62,17 +86,6 @@ class MegaMenuAll extends Component {
                     >
                       {SubList.subcategory_name}{' '}
                     </Link>
-                    {/* <Link
-                      onClick={() => {
-                        window.location.href =
-                          '/productsubcategory/' +
-                          CatList.category_name +
-                          '/' +
-                          SubList.subcategory_name;
-                      }}
-                    >
-                      {SubList.subcategory_name}
-                    </Link> */}
                   </li>
                 );
               })}
