@@ -10,6 +10,9 @@ class Notification extends Component {
       NotificationData: [],
       isLoading: '',
       mainDiv: 'd-none',
+      Notificationmsg: '',
+      Notificationtitle: '',
+      Notificationdate: '',
     };
   }
 
@@ -30,8 +33,16 @@ class Notification extends Component {
     this.setState({ show: false });
   };
 
-  handleShow = () => {
+  handleShow = (event) => {
     this.setState({ show: true });
+    let Nmsg = event.target.getAttribute('data-message');
+    let Ntitle = event.target.getAttribute('data-title');
+    let Ndate = event.target.getAttribute('data-date');
+    this.setState({
+      Notificationmsg: Nmsg,
+      Notificationtitle: Ntitle,
+      Notificationdate: Ndate,
+    });
   };
 
   render() {
@@ -39,7 +50,7 @@ class Notification extends Component {
     const MyView = NotificationList.map((NotificationList, i) => {
       return (
         <Col className=" p-1 " md={6} lg={6} sm={12} xs={12}>
-          <Card onClick={this.handleShow} className="notification-card">
+          <Card className="notification-card">
             <Card.Body>
               <h6>{NotificationList.title}</h6>
               <p className="py-1  px-0 text-primary m-0">
@@ -47,7 +58,15 @@ class Notification extends Component {
                 Status: Unread
               </p>
 
-              <Button className="btn btn-danger">Details </Button>
+              <Button
+                onClick={this.handleShow}
+                data-title={NotificationList.title}
+                data-date={NotificationList.date}
+                data-message={NotificationList.message}
+                className="btn btn-danger"
+              >
+                Details{' '}
+              </Button>
             </Card.Body>
           </Card>
         </Col>
@@ -63,17 +82,12 @@ class Notification extends Component {
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <h6>
-              <i className="fa fa-bell"></i> Date:11/05/2021
+              <i className="fa fa-bell"></i> Date:{this.state.Notificationdate}
             </h6>
           </Modal.Header>
           <Modal.Body>
-            <h6>Woohoo, you're reading this text in a modal!</h6>
-            <p>
-              Each course has been hand-tailored to teach a specific skill. I
-              hope you agree! Whether you’re trying to learn a new skill from
-              scratch or want to refresh your memory on something you’ve learned
-              in the past, you’ve come to the right place.
-            </p>
+            <h6>{this.state.Notificationtitle}</h6>
+            <p>{this.state.Notificationmsg}</p>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={this.handleClose}>
