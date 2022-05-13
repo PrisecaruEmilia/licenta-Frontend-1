@@ -66,7 +66,7 @@ export class ProductDetailsPage extends Component {
           </div>
 
           <ProductDetails data={this.state.ProductData} />
-          <SuggestedProduct />
+          {/* <SuggestedProduct /> */}
 
           <div className="Desktop">
             <Footer />
