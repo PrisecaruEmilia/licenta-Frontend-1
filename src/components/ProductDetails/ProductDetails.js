@@ -12,13 +12,15 @@ import InnerImageZoom from 'react-inner-image-zoom';
 class ProductDetails extends Component {
   constructor() {
     super();
+    this.state = {
+      previewImg: '0',
+    };
   }
 
-  imgOnClick(event) {
+  imgOnClick = (event) => {
     let imgSrc = event.target.getAttribute('src');
-    let previewImg = document.getElementById('previewImg');
-    ReactDOM.findDOMNode(previewImg).setAttribute('src', imgSrc);
-  }
+    this.setState({ previewImg: imgSrc });
+  };
 
   PriceOption(price, special_price) {
     if (special_price == 'na') {
@@ -41,6 +43,9 @@ class ProductDetails extends Component {
     let subcategory = ProductAllData['productList'][0]['subcategory'];
     let image = ProductAllData['productList'][0]['image'];
 
+    if (this.state.previewImg === '0') {
+      this.setState({ previewImg: image });
+    }
     let price = ProductAllData['productList'][0]['price'];
     let product_code = ProductAllData['productList'][0]['product_code'];
     let remark = ProductAllData['productList'][0]['remark'];
@@ -124,13 +129,13 @@ class ProductDetails extends Component {
             >
               <Row>
                 <Col className="p-3" md={6} lg={6} sm={12} xs={12}>
-                  <img id="previewImg" className="bigimage" src={image_one} />
-                  <div className="bigimage">
+                  {/* <img id="previewImg" className="bigimage" src={image_one} /> */}
+                  <div>
                     <InnerImageZoom
                       zoomScale={1.8}
                       zoomType={'hover'}
-                      src={image_one}
-                      zoomSrc={image_one}
+                      src={this.state.previewImg}
+                      zoomSrc={this.state.previewImg}
                     />
                   </div>
 
