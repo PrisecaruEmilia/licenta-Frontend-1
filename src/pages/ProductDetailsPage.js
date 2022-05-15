@@ -32,6 +32,7 @@ export class ProductDetailsPage extends Component {
       .catch((error) => {});
   }
   render() {
+    const User = this.props.user;
     if (this.state.mainDiv == 'd-none') {
       return (
         <Fragment>
@@ -65,7 +66,7 @@ export class ProductDetailsPage extends Component {
             <NavMenuMobile />
           </div>
 
-          <ProductDetails data={this.state.ProductData} />
+          <ProductDetails data={this.state.ProductData} user={User} />
           {/* <SuggestedProduct /> */}
 
           <div className="Desktop">
