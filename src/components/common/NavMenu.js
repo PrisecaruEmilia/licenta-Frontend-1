@@ -127,7 +127,7 @@ export class NavMenu extends Component {
           </Link>
 
           <Link to="/cart" className="cart-btn">
-            <i className="fa fa-shopping-cart"></i> {this.state.cartCount} Items{' '}
+            <i className="fa fa-shopping-cart"></i> 0 Items{' '}
           </Link>
         </div>
       );
