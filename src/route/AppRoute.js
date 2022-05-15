@@ -19,6 +19,7 @@ import RegisterPage from '../pages/RegisterPage';
 import ForgetPasswordPage from '../pages/ForgetPasswordPage';
 import ResetPasswordPage from '../pages/ResetPasswordPage';
 import ProfilePage from '../pages/ProfilePage';
+import OrderListPage from '../pages/OrderListPage';
 
 import axios from 'axios';
 import NavMenu from '../components/common/NavMenu';
@@ -183,6 +184,11 @@ export class AppRoute extends Component {
             exact
             path="/productbysearch/:searchkey"
             render={(props) => <SearchPage {...props} key={Date.now()} />}
+          />
+          <Route
+            exact
+            path="/orderlist"
+            render={(props) => <OrderListPage {...props} key={Date.now()} />}
           />
         </Switch>
       </Fragment>

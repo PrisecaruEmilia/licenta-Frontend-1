@@ -13,6 +13,7 @@ class Cart extends Component {
       isLoading: '',
       mainDiv: 'd-none',
       PageRefreshStatus: false,
+      PageRedirectStaus: false,
       confirmBtn: 'Confirm Order',
       city: '',
       payment: '',
@@ -138,6 +139,41 @@ class Cart extends Component {
     } else if (address.length === 0) {
       cogoToast.error('Please Select Your Address', { position: 'top-right' });
     } else {
+      let invoice = new Date().getTime();
+      let MyFromData = new FormData();
+      MyFromData.append('city', city);
+      MyFromData.append('payment_method', payment);
+      MyFromData.append('name', name);
+      MyFromData.append('delivery_address', address);
+      MyFromData.append('email', email);
+      MyFromData.append('invoice_no', invoice);
+      MyFromData.append('delivery_charge', '00');
+
+      axios
+        .post(AppURL.CartOrder, MyFromData)
+        .then((response) => {
+          if (response.data === 1) {
+            cogoToast.success('Order Request Received', {
+              position: 'top-right',
+            });
+            this.setState({ PageRedirectStaus: true });
+          } else {
+            cogoToast.error('Your Request is not done ! Try Aagain', {
+              position: 'top-right',
+            });
+          }
+        })
+        .catch((error) => {
+          cogoToast.error('Your Request is not done ! Try Aagain', {
+            position: 'top-right',
+          });
+        });
+    }
+  };
+
+  PageRedirect = () => {
+    if (this.state.PageRedirectStaus === true) {
+      return <Redirect to="/orderlist" />;
     }
   };
 
@@ -297,6 +333,7 @@ class Cart extends Component {
           </Row>
         </Container>
         {this.PageRefresh()}
+        {this.PageRedirect()}
       </Fragment>
     );
   }
