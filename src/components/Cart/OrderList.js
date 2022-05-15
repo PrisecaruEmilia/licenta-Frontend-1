@@ -12,6 +12,7 @@ import {
   Modal,
 } from 'react-bootstrap';
 import cogoToast from 'cogo-toast';
+import { Redirect } from 'react-router-dom';
 
 export class OrderList extends Component {
   constructor() {
@@ -118,6 +119,9 @@ export class OrderList extends Component {
   }; // End Post Review Method
 
   render() {
+    if (!localStorage.getItem('token')) {
+      return <Redirect to="/login" />;
+    }
     const MyList = this.state.ProductData;
     const MyView = MyList.map((ProductList, i) => {
       return (
