@@ -3,6 +3,8 @@ import { Navbar, Container, Row, Col, Button } from 'react-bootstrap';
 import Logo from '../../assets/images/easyshop.png';
 import { Link, Redirect } from 'react-router-dom';
 import MegaMenuAll from '../home/MegaMenuAll';
+import axios from 'axios';
+import AppURL from '../../api/AppUrl';
 export class NavMenu extends Component {
   constructor() {
     super();
@@ -11,10 +13,17 @@ export class NavMenu extends Component {
       ContentOverState: 'ContentOverlayClose',
       Searchkey: '',
       SearchRedirectStauts: false,
+      cartCount: 0,
     };
     this.SearchOnChange = this.SearchOnChange.bind(this);
     this.SeachOnClick = this.SeachOnClick.bind(this);
     this.searchRedirect = this.searchRedirect.bind(this);
+  }
+  componentDidMount() {
+    let product_code = this.props.product_code;
+    axios.get(AppURL.CartCount(product_code)).then((response) => {
+      this.setState({ cartCount: response.data });
+    });
   }
 
   logout = () => {
@@ -89,7 +98,7 @@ export class NavMenu extends Component {
           </Link>
 
           <Link to="/cart" className="cart-btn">
-            <i className="fa fa-shopping-cart"></i> 3 Items{' '}
+            <i className="fa fa-shopping-cart"></i> {this.state.cartCount} Items{' '}
           </Link>
         </div>
       );
@@ -118,7 +127,7 @@ export class NavMenu extends Component {
           </Link>
 
           <Link to="/cart" className="cart-btn">
-            <i className="fa fa-shopping-cart"></i> 3 Items{' '}
+            <i className="fa fa-shopping-cart"></i> {this.state.cartCount} Items{' '}
           </Link>
         </div>
       );

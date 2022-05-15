@@ -6,7 +6,7 @@ import Product3 from '../../assets/images/product/product3.png';
 import Product4 from '../../assets/images/product/product4.png';
 import ReactDOM from 'react-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.css';
 import InnerImageZoom from 'react-inner-image-zoom';
 import SuggestedProduct from './SuggestedProduct';
@@ -26,6 +26,7 @@ class ProductDetails extends Component {
       quantity: '',
       productCode: null,
       addToCart: 'Add To Cart',
+      PageRefreshStatus: false,
     };
   }
 
@@ -70,6 +71,7 @@ class ProductDetails extends Component {
               position: 'top-right',
             });
             this.setState({ addToCart: 'Add To Cart' });
+            this.setState({ PageRefreshStatus: true });
           } else {
             cogoToast.error('Your Request is not done ! Try Aagain', {
               position: 'top-right',
@@ -83,6 +85,13 @@ class ProductDetails extends Component {
           });
           this.setState({ addToCart: 'Add To Cart' });
         });
+    }
+  };
+
+  PageRefresh = () => {
+    if (this.state.PageRefreshStatus === true) {
+      let URL = window.location;
+      return <Redirect to={URL} />;
     }
   };
 
@@ -366,6 +375,7 @@ class ProductDetails extends Component {
         </Container>
 
         <SuggestedProduct subcategory={subcategory} />
+        {this.PageRefresh()}
       </Fragment>
     );
   }
