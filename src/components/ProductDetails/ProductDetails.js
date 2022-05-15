@@ -27,6 +27,7 @@ class ProductDetails extends Component {
       productCode: null,
       addToCart: 'Add To Cart',
       PageRefreshStatus: false,
+      addToFav: 'Favourite',
     };
   }
 
@@ -95,6 +96,40 @@ class ProductDetails extends Component {
     }
   };
 
+  addToFav = () => {
+    this.setState({ addToFav: 'Adding...' });
+    let productCode = this.state.productCode;
+    let email = this.props.user.email;
+
+    if (!localStorage.getItem('token')) {
+      cogoToast.warn('Please You have to Login First', {
+        position: 'top-right',
+      });
+    } else {
+      axios
+        .post(AppURL.AddFavourite(productCode, email))
+        .then((response) => {
+          if (response.data === 1) {
+            cogoToast.success('Product Is now in Favourite', {
+              position: 'top-right',
+            });
+            this.setState({ addToFav: 'Favourite' });
+          } else {
+            cogoToast.error('Your Request is not done ! Try Aagain', {
+              position: 'top-right',
+            });
+            this.setState({ addToFav: 'Favourite' });
+          }
+        })
+        .catch((error) => {
+          cogoToast.error('Your Request is not done ! Try Aagain', {
+            position: 'top-right',
+          });
+          // console.log(error);
+          this.setState({ addToFav: 'Favourite' });
+        });
+    }
+  };
   colorOnChange = (event) => {
     let color = event.target.value;
     // alert(color);
@@ -352,9 +387,12 @@ class ProductDetails extends Component {
                       {' '}
                       <i className="fa fa-car"></i> Order Now
                     </button>
-                    <button className="btn btn-primary m-1">
+                    <button
+                      onClick={this.addToFav}
+                      className="btn btn-primary m-1"
+                    >
                       {' '}
-                      <i className="fa fa-heart"></i> Favourite
+                      <i className="fa fa-heart"></i> {this.state.addToFav}{' '}
                     </button>
                   </div>
                 </Col>
