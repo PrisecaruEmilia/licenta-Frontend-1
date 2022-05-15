@@ -51,6 +51,9 @@ export class Favorite extends Component {
     }
   };
   render() {
+    if (!localStorage.getItem('token')) {
+      return <Redirect to="/login" />;
+    }
     const FevList = this.state.ProductData;
     const MyView = FevList.map((ProductList, i) => {
       return (
