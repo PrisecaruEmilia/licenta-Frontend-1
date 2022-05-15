@@ -13,6 +13,11 @@ class Cart extends Component {
       isLoading: '',
       mainDiv: 'd-none',
       PageRefreshStatus: false,
+      confirmBtn: 'Confirm Order',
+      city: '',
+      payment: '',
+      name: '',
+      address: '',
     };
   }
 
@@ -96,6 +101,44 @@ class Cart extends Component {
           position: 'top-right',
         });
       });
+  };
+  cityOnChange = (event) => {
+    let city = event.target.value;
+    this.setState({ city: city });
+  };
+
+  paymentMethodOnChange = (event) => {
+    let payment = event.target.value;
+    this.setState({ payment: payment });
+  };
+
+  nameOnChange = (event) => {
+    let name = event.target.value;
+    this.setState({ name: name });
+  };
+
+  addressOnChange = (event) => {
+    let address = event.target.value;
+    this.setState({ address: address });
+  };
+
+  confirmOnClick = () => {
+    let city = this.state.city;
+    let payment = this.state.payment;
+    let name = this.state.name;
+    let address = this.state.address;
+    let email = this.props.user.email;
+
+    if (city.length === 0) {
+      cogoToast.error('Please Select City', { position: 'top-right' });
+    } else if (payment.length === 0) {
+      cogoToast.error('Please Select Payment', { position: 'top-right' });
+    } else if (name.length === 0) {
+      cogoToast.error('Please Select Your Name', { position: 'top-right' });
+    } else if (address.length === 0) {
+      cogoToast.error('Please Select Your Address', { position: 'top-right' });
+    } else {
+    }
   };
 
   render() {
@@ -190,7 +233,10 @@ class Cart extends Component {
                     <div className="row">
                       <div className="col-md-12 p-1 col-lg-12 col-sm-12 col-12">
                         <label className="form-label">Choose City</label>
-                        <select className="form-control">
+                        <select
+                          onChange={this.cityOnChange}
+                          className="form-control"
+                        >
                           <option value="">Choose</option>
                           <option value="Dhaka">Assam</option>
                           <option value="Dhaka">Bihar </option>
@@ -204,7 +250,10 @@ class Cart extends Component {
                         <label className="form-label">
                           Choose Payment Method
                         </label>
-                        <select className="form-control">
+                        <select
+                          onChange={this.paymentMethodOnChange}
+                          className="form-control"
+                        >
                           <option value="">Choose</option>
                           <option value="Cash On Delivery">
                             Cash On Delivery
@@ -215,6 +264,7 @@ class Cart extends Component {
                       <div className="col-md-12 p-1 col-lg-12 col-sm-12 col-12">
                         <label className="form-label">Your Name</label>
                         <input
+                          onChange={this.nameOnChange}
                           className="form-control"
                           type="text"
                           placeholder=""
@@ -224,6 +274,7 @@ class Cart extends Component {
                       <div className="col-md-12 p-1 col-lg-12 col-sm-12 col-12">
                         <label className="form-label">Delivery Address</label>
                         <textarea
+                          onChange={this.addressOnChange}
                           rows={2}
                           className="form-control"
                           type="text"
@@ -231,8 +282,11 @@ class Cart extends Component {
                         />
                       </div>
                       <div className="col-md-12 p-1 col-lg-12 col-sm-12 col-12">
-                        <button className="btn  site-btn">
-                          Confirm Order{' '}
+                        <button
+                          onClick={this.confirmOnClick}
+                          className="btn  site-btn"
+                        >
+                          {this.state.confirmBtn}
                         </button>
                       </div>
                     </div>
