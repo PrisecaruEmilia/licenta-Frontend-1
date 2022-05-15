@@ -11,23 +11,21 @@ import {
   Card,
   Modal,
 } from 'react-bootstrap';
+import cogoToast from 'cogo-toast';
+
 export class OrderList extends Component {
   constructor() {
     super();
     this.state = {
       ProductData: [],
       show: false,
-      NotificationData: [],
-      isLoading: '',
-      mainDiv: 'd-none',
-      Notificationmsg: '',
-      Notificationtitle: '',
-      Notificationdate: '',
+
       name: '',
       rating: '',
       comment: '',
       product_name: '',
       product_code: '',
+      ReviewModal: false,
     };
   }
 
@@ -41,20 +39,16 @@ export class OrderList extends Component {
       .catch((error) => {});
   }
 
-  handleClose = () => {
-    this.setState({ show: false });
+  ReviewModalOpen = (product_code, product_name) => {
+    this.setState({
+      ReviewModal: true,
+      product_code: product_code,
+      product_name: product_name,
+    });
   };
 
-  handleShow = (event) => {
-    this.setState({ show: true });
-    let Nmsg = event.target.getAttribute('data-message');
-    let Ntitle = event.target.getAttribute('data-title');
-    let Ndate = event.target.getAttribute('data-date');
-    this.setState({
-      Notificationmsg: Nmsg,
-      Notificationtitle: Ntitle,
-      Notificationdate: Ndate,
-    });
+  ReviewModalClose = () => {
+    this.setState({ ReviewModal: false });
   };
 
   nameOnChange = (event) => {
@@ -72,7 +66,57 @@ export class OrderList extends Component {
     this.setState({ comment: comment });
   };
 
-  PostReview = () => {};
+  PostReview = () => {
+    let product_code = this.state.product_code;
+    let product_name = this.state.product_name;
+    let rating = this.state.rating;
+    let comment = this.state.comment;
+    let name = this.state.name;
+
+    if (name.length === 0) {
+      cogoToast.error('Name Is Required', { position: 'top-right' });
+    } else if (comment.length === 0) {
+      cogoToast.error('Comment Is Required', { position: 'top-right' });
+    } else if (rating.length === 0) {
+      cogoToast.error('Rating Is Required', { position: 'top-right' });
+    } else if (comment.length > 50) {
+      cogoToast.error("Comments can't more then 150 character", {
+        position: 'top-right',
+      });
+    } else {
+      let MyFromData = new FormData();
+      MyFromData.append('product_code', product_code);
+      MyFromData.append('product_name', product_name);
+      MyFromData.append('reviewer_name', name);
+      MyFromData.append(
+        'reviewer_photo',
+        'https://www.hollywoodreporter.com/wp-content/uploads/2019/03/avatar-publicity_still-h_2019.jpg?w=1024'
+      );
+      MyFromData.append('reviewer_rating', rating);
+      MyFromData.append('reviewer_comments', comment);
+
+      axios
+        .post(AppURL.PostReview, MyFromData)
+        .then((response) => {
+          if (response.data === 1) {
+            cogoToast.success('Review Submitted', { position: 'top-right' });
+            this.ReviewModalClose();
+          } else {
+            cogoToast.error('Your Request is not done ! Try Aagain', {
+              position: 'top-right',
+            });
+            console.log(response.data);
+          }
+        })
+        .catch((error) => {
+          cogoToast.error('Your Request is not done ! Try Aagain', {
+            position: 'top-right',
+          });
+          console.log(error);
+        });
+    }
+  }; // End Post Review Method
+
   render() {
     const MyList = this.state.ProductData;
     const MyView = MyList.map((ProductList, i) => {
@@ -90,18 +134,26 @@ export class OrderList extends Component {
             </h6>
             <h6>Stauts = {ProductList.order_status} </h6>
           </Col>
-          <Button onClick={this.handleShow} className="btn btn-danger">
+          <Button
+            onClick={this.ReviewModalOpen.bind(
+              this,
+              ProductList.product_code,
+              ProductList.product_name
+            )}
+            className="btn btn-danger"
+          >
             Post Review{' '}
           </Button>
           <hr></hr>
         </div>
       );
     });
+
     return (
       <Fragment>
         <Container>
           <div className="section-title text-center mb-55">
-            <h2>Order History By ( {this.props.user.name} ) </h2>
+            <h2>Order History By ( {this.props.user.name} )</h2>
           </div>
 
           <Card>
@@ -110,7 +162,8 @@ export class OrderList extends Component {
             </Card.Body>
           </Card>
         </Container>
-        <Modal show={this.state.show} onHide={this.handleClose}>
+
+        <Modal show={this.state.ReviewModal} onHide={this.ReviewModalClose}>
           <Modal.Header closeButton>
             <h6>
               <i className="fa fa-bell"></i> Post Your Review{' '}
@@ -123,7 +176,7 @@ export class OrderList extends Component {
                 onChange={this.nameOnChange}
                 className="form-control"
                 type="text"
-                placeholder=""
+                placeholder={this.props.user.name}
               />
             </div>
 
@@ -154,7 +207,8 @@ export class OrderList extends Component {
             <Button variant="secondary" onClick={this.PostReview}>
               Post
             </Button>
-            <Button variant="secondary" onClick={this.handleClose}>
+
+            <Button variant="secondary" onClick={this.ReviewModalClose}>
               Close
             </Button>
           </Modal.Footer>
